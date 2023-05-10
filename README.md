@@ -1,5 +1,16 @@
 # Tutorial Maria DB dengan Docker Compose di Ubuntu
 
+## Preparation
+### Install Docker
+- https://www.petanikode.com/docker-install/
+
+### Install Docker Compose
+- https://www.digitalocean.com/community/tutorials/how-to-install-and-use-docker-compose-on-ubuntu-20-04-id
+
+### Belajar Docker
+- https://www.niagahoster.co.id/blog/docker-tutorial/
+- Docker CLI : https://github.com/triyasmkom/tutorial_repo/blob/master/docker-CLI.md
+
 ## Install MariaDB dan phpMyAdmin
 
 Struktur Project: 
@@ -118,10 +129,15 @@ $ docker exec -it mariadb-test bash
 
 ## Database Dasar
 
-Silakan gunakan command line dari workbench kesukaan anda.
+**Contoh Skema Database.** 
+
+![image](./image/img_20.png)
+
+**Silakan gunakan command line dari workbench kesukaan anda.**
+
 ![image](./image/img_4.png)
 
-Otput:
+Output:
 ![image](./image/img_6.png)
 
 ### Melihat, Membuat, Menghapus dan Memilih database.
@@ -145,13 +161,13 @@ use database_test;
 #### Type Data Number
 1. Integer atau number bilangan bulat.
 
-   | Type      | Length in Bytes | Min Value <br/>(Signed)   | Max Value <br/>(Signed) | Min Value <br/>(Unsigned) | Max Value<br/> (Unsigned) |
-      |-----------|-----------------|----------------------|--------------------|----------------------|----------------------|
-   | TYNYINT   | 1               | -128                 | 127                | 0                    | 255                  |
-   | SMALLINT  | 2               | -32768               | 32767              | 0                    | 65535                |
-   | MEDIUMINT | 3               | -8388608             | 8388607            | 0                    | 16777215             |
-   | INT       | 4               | -2147483648          | 2147483647         | 0                    | 4294967295           |
-   | BIGINT    | 5               | -9223372036854775808 | 9223372036854775808| 0                    | 18446744073709551615 |
+   | Type        | Length in Bytes | Min Value <br/>(Signed)   | Max Value <br/>(Signed) | Min Value <br/>(Unsigned) | Max Value<br/> (Unsigned) |
+      |-------------|-----------------|----------------------|--------------------|----------------------|----------------------|
+   | TYNYINT     | 1               | -128                 | 127                | 0                    | 255                  |
+   | SMALLINT    | 2               | -32768               | 32767              | 0                    | 65535                |
+   | MEDIUMINT   | 3               | -8388608             | 8388607            | 0                    | 16777215             |
+   | INT         | 4               | -2147483648          | 2147483647         | 0                    | 4294967295           |
+   | BIGINT      | 5               | -9223372036854775808 | 9223372036854775808| 0                    | 18446744073709551615 |
 
 
 2. Floating Point atau number bilangan pecahan.
@@ -198,8 +214,9 @@ use database_test;
 Enum adalah type data sring yang bisa kita tentukan pilihannya.
 
 Contoh:
-```
-Enum('Pria', 'Wanita') --> Hanya bisa menerima data Pria atau wanita
+```mysql
+# Hanya bisa menerima data Pria atau wanita
+Enum('Pria', 'Wanita')
 ```
 
 #### Type data Date dan Time
@@ -229,8 +246,8 @@ show tables ;
 
 ```
 #### Membuat table
-```sql
-
+```mysql
+# Membuat tabel
 create table barang(
                       kode int,
                       nama varchar(100),
@@ -241,27 +258,27 @@ create table barang(
 
 #### Melihat struktur tabel
 
-```sql
--- melihat desktipsi struktur table
+```mysql
+# melihat desktipsi struktur table
 desc barang;
 
 describe barang;
 
--- melihat struktur query pembuatan tabel
+# melihat struktur query pembuatan tabel
 show create table barang;
 ```
 
 #### Mengubah Tabel
 
-```sql
+```mysql
 alter table barang
---  menambah kolom
+#   menambah kolom
     add column nama_column text,
---  menghapus kolom
+#   menghapus kolom
     drop column nama,
---  mengubah nama
+#   mengubah nama
     rename column nama to nama_baru,
---  mengubah posisi kolom
+#   mengubah posisi kolom
     modify nama varchar(100) after jumlah,
     modify nama varchar(100) first;
 ```
@@ -350,7 +367,7 @@ values ('P003','Mie Ayam Ceker',20000,'Mie ayam original + ceker', 100),
 ```
 ### Select Data
 
-```
+```mysql
 # mengambil semua kolom
 select * from products;
 
@@ -378,7 +395,7 @@ alter table products add primary key (id);
 
 ### Where Clause
 
-```
+```mysql
 select * from products
 where quantity = 100;
 ```
@@ -601,6 +618,7 @@ select distinct category from products;
 
 
 ```mysql
+# Menggunakan aritmetic operator
 select 10, 3, 10 * 10 as hasil;
 
 select id, name, price div 1000 as 'Price in Key' from products;
@@ -644,6 +662,7 @@ details : https://dev.mysql.com/doc/refman/8.0/en/mathematical-functions.html
 | TRUNCATE()	 | Truncate to specified number of decimal places                 |
 
 ```mysql
+# menggunakan fungsi matematika
 select id, cos(price), sin(price), tan(price), price from products;
 
 select * from products
@@ -678,6 +697,7 @@ select last_insert_id();
 Lihat dokumentasi: https://dev.mysql.com/doc/refman/8.0/en/string-functions.html
 
 ```mysql
+# menggunakan string function
 select id,
        lower(name) as 'Name Lower',
        length(name) as 'Name Length'
@@ -689,7 +709,7 @@ select id,
 Lihat dokumentasi: https://dev.mysql.com/doc/refman/8.0/en/date-and-time-functions.html
 
 ```mysql
-# 
+# menggunakan fungsi datetime
 select id,
        extract(year from created_at) as year,
        extract(month from created_at)
@@ -785,6 +805,7 @@ group by products.category;
 ### Having Clause
 
 ```mysql
+# menggunakan having clause
 select
     count(id) as total_product,
     products.category
@@ -877,6 +898,7 @@ values ('P0016', 'Permen','lain-lain', 500);
 
 
 ```mysql
+# membuat index
 create table sellers(
     id int not null auto_increment,
     name varchar(100),
@@ -885,7 +907,8 @@ create table sellers(
     unique key email_unique(email),
     index name_index(name)
 ) engine = InnoDB;
-# 
+
+# membuat multi index 
 create table sellers(
                        id int not null auto_increment,
                        name1 varchar(100),
@@ -900,11 +923,11 @@ create table sellers(
                        index name1_name2_name3_index(name1,name2,name3)
 ) engine = InnoDB;
 
-# menambah
+# menambah index
 alter table sellers
    add index name_index(name);
 
-# menghapus
+# menghapus index
 alter table sellers
    drop index name_index(name);
 
@@ -1657,12 +1680,189 @@ unlock tables;
 - Lock instance adalah perintah locking yang akan membuat perintah DDL (data definition language) akan diminta menunggu sampai proses unlock instance
 - Biasanya proses locking instance ini terjadi ketika ingin melakukan backup data, agar tidak terjadi perubahan terhadap strukture tabel, misalnya kita bisa melakukan locking instance
 - Setelah proses backup selesai, baru kita unlock lagi instance-nya
-- Untuk melakukan locking instance, kita bisa gunakan perintah: LOCKING INSTANCE FOR BACKEND
-- Untuk melakukan
+- Untuk melakukan locking instance, kita bisa gunakan perintah: LOCK INSTANCE FOR BACKEND
+- Untuk melakukan unlocking instance kita bisa menggunakan perintah: UNLOCK INSTANCE
 
+```mysql
+lock instance for backup;
+
+unlock instance;
+```
+
+### User Management
+#### Root User
+- Secara default, mysql membuat root user sebagai super administrator
+- Namun best practice nya, saat kita menjalankan MySql dengan aplikasi yang kita buat, sangat disarankan tidak menggunakan user root
+- Lebih baik kita buat user khusus untuk tiap aplikasi, bahkan kita bisa batasi hak akses user tersebut, seperti hanya bisa melakukan select dan tidak boleh melakukan insert, update atau delete
+- Daftar hak akses: https://dev.mysql.com/doc/refman/8.0/en/grant.html
+
+**Table Permissible Static Privileges for GRANT and REVOKE**
+
+| Privilege               | 	Meaning and Grantable Levels                                                                                                                            |
+|-------------------------|----------------------------------------------------------------------------------------------------------------------------------------------------------|
+| ALL [PRIVILEGES]        | Grant all privileges at specified access level except GRANT OPTION and PROXY.                                                                            |                                                                                                          |
+| ALTER                   | Enable use of ALTER TABLE. Levels: Global, database, table.                                                                                              |                                                                                                                            
+| ALTER ROUTINE           | Enable stored routines to be altered or dropped. Levels: Global, database, routine.                                                                      |                                                                                                    
+| CREATE                  | Enable database and table creation. Levels: Global, database, table.                                                                                     |                                                                                                                  
+| CREATE ROLE             | Enable role creation. Level: Global.                                                                                                                     |                                                                                                                                         
+| CREATE ROUTINE          | Enable stored routine creation. Levels: Global, database.                                                                                                |                                                                                                                               
+| CREATE TABLESPACE       | Enable tablespaces and log file groups to be created, altered, or dropped. Level: Global.                                                                |                                                                                              
+| CREATE TEMPORARY TABLES | Enable use of CREATE TEMPORARY TABLE. Levels: Global, database.                                                                                          |                                                                                                                         
+| CREATE USER             | Enable use of CREATE USER, DROP USER, RENAME USER, and REVOKE ALL PRIVILEGES. Level: Global.                                                             |                                                                                          
+| CREATE VIEW             | Enable views to be created or altered. Levels: Global, database, table.                                                                                  |                                                                                                                
+| DELETE                  | Enable use of DELETE. Level: Global, database, table.                                                                                                    |                                                                                                                                  
+| DROP                    | Enable databases, tables, and views to be dropped. Levels: Global, database, table.                                                                      |                                                                                                    
+| DROP ROLE               | Enable roles to be dropped. Level: Global.                                                                                                               |                                                                                                                                             
+| EVENT                   | Enable use of events for the Event Scheduler. Levels: Global, database.                                                                                  |                                                                                                                 
+| EXECUTE                 | Enable the user to execute stored routines. Levels: Global, database, routine.                                                                           |                                                                                                         
+| FILE                    | Enable the user to cause the server to read or write files. Level: Global.                                                                               |                                                                                                            
+| GRANT OPTION            | Enable privileges to be granted to or removed from other accounts. Levels: Global, database, table, routine, proxy.                                      |                                                                     
+| INDEX                   | Enable indexes to be created or dropped. Levels: Global, database, table.                                                                                |                                                                                                               
+| INSERT                  | Enable use of INSERT. Levels: Global, database, table, column.                                                                                           |                                                                                                                          
+| LOCK TABLES             | Enable use of LOCK TABLES on tables for which you have the SELECT privilege. Levels: Global, database.                                                   |                                                                              
+| PROCESS                 | Enable the user to see all processes with SHOW PROCESSLIST. Level: Global.                                                                               |                                                                                                          
+| PROXY                   | Enable user proxying. Level: From user to user.                                                                                                          |                                                                                                                          
+| REFERENCES              | Enable foreign key creation. Levels: Global, database, table, column.                                                                                    |                                                                                                                
+| RELOAD                  | Enable use of FLUSH operations. Level: Global.                                                                                                           |                                                                                                                                        
+| REPLICATION CLIENT      | Enable the user to ask where source or replica servers are. Level: Global.                                                                               |                                                                                                             
+| REPLICATION SLAVE       | Enable replicas to read binary log events from the source. Level: Global.                                                                                |                                                                                                              
+| SELECT                  | Enable use of SELECT. Levels: Global, database, table, column.                                                                                           |                                                                                                                          
+| SHOW DATABASES          | Enable SHOW DATABASES to show all databases. Level: Global.                                                                                              |                                                                                                                              
+| SHOW VIEW               | Enable use of SHOW CREATE VIEW. Levels: Global, database, table.                                                                                         |                                                                                                                       
+| SHUTDOWN                | Enable use of mysqladmin shutdown. Level: Global.                                                                                                        |                                                                                                                                     
+| SUPER                   | Enable use of other administrative operations such as CHANGE REPLICATION SOURCE TO, CHANGE MASTER TO, KILL, PURGE BINARY LOGS, SET GLOBAL, and mysqladmin debug command. Level: Global. | 
+| TRIGGER                 | Enable trigger operations. Levels: Global, database, table.                                                                                              |                                                                                                                            
+| UPDATE                  | Enable use of UPDATE. Levels: Global, database, table, column.                                                                                           |                                                                                                                         
+| USAGE                   | Synonym for “no privileges”                                                                                                                              |                                                                                                                                                           
+
+
+
+**Table Permissible Dynamic Privileges for GRANT and REVOKE**
+
+| Privilege                   | 	Meaning and Grantable Levels                                                    |
+|-----------------------------|----------------------------------------------------------------------------------|
+| APPLICATION_PASSWORD_ADMIN  | 	Enable dual password administration. Level: Global.                             |
+| AUDIT_ABORT_EXEMPT          | 	Allow queries blocked by audit log filter. Level: Global.                       |
+| AUDIT_ADMIN                 | 	Enable audit log configuration. Level: Global.                                  |
+| AUTHENTICATION_POLICY_ADMIN | 	Enable authentication policy administration. Level: Global.                     |
+| BACKUP_ADMIN                | 	Enable backup administration. Level: Global.                                    |
+| BINLOG_ADMIN                | 	Enable binary log control. Level: Global.                                       |
+| BINLOG_ENCRYPTION_ADMIN     | 	Enable activation and deactivation of binary log encryption. Level: Global.     |
+| CLONE_ADMIN                 | 	Enable clone administration. Level: Global.                                     |
+| CONNECTION_ADMIN            | 	Enable connection limit/restriction control. Level: Global.                     |
+| ENCRYPTION_KEY_ADMIN        | 	Enable InnoDB key rotation. Level: Global.                                      |
+| FIREWALL_ADMIN              | 	Enable firewall rule administration, any user. Level: Global.                   |
+| FIREWALL_EXEMPT             | 	Exempt user from firewall restrictions. Level: Global.                          |
+| FIREWALL_USER               | 	Enable firewall rule administration, self. Level: Global.                       |
+| FLUSH_OPTIMIZER_COSTS       | 	Enable optimizer cost reloading. Level: Global.                                 |
+| FLUSH_STATUS                | 	Enable status indicator flushing. Level: Global.                                |
+| FLUSH_TABLES                | 	Enable table flushing. Level: Global.                                           |
+| FLUSH_USER_RESOURCES        | 	Enable user-resource flushing. Level: Global.                                   |                            
+| GROUP_REPLICATION_ADMIN     | Enable Group Replication control. Level: Global.                                 |                      
+| INNODB_REDO_LOG_ARCHIVE     | Enable redo log archiving administration. Level: Global.                         |              
+| INNODB_REDO_LOG_ENABLE      | Enable or disable redo logging. Level: Global.                                   |                 
+| NDB_STORED_USER             | 	Enable sharing of user or role between SQL nodes (NDB Cluster). Level: Global.  |
+| PASSWORDLESS_USER_ADMIN     | 	Enable passwordless user account administration. Level: Global.                 |      
+| PERSIST_RO_VARIABLES_ADMIN  | Enable persisting read-only system variables. Level: Global.                     |    
+| REPLICATION_APPLIER         | 	Act as the PRIVILEGE_CHECKS_USER for a replication channel. Level: Global.      |
+| REPLICATION_SLAVE_ADMIN	    | Enable regular replication control. Level: Global.                               |                 
+| RESOURCE_GROUP_ADMIN	       | Enable resource group administration. Level: Global.                             |                 
+| RESOURCE_GROUP_USER	        | Enable resource group administration. Level: Global.                             |                   
+| ROLE_ADMIN                  | Enable roles to be granted or revoked, use of WITH ADMIN OPTION. Level: Global.  |   
+| SESSION_VARIABLES_ADMIN     | Enable setting restricted session system variables. Level: Global.               |  
+| SET_USER_ID                 | Enable setting non-self DEFINER values. Level: Global.                           |            
+| SHOW_ROUTINE                | Enable access to stored routine definitions. Level: Global.                      |                  
+| SKIP_QUERY_REWRITE          | Do not rewrite queries executed by this user. Level: Global.                     |            
+| SYSTEM_USER                 | Designate account as system account. Level: Global.                              |        
+| SYSTEM_VARIABLES_ADMIN      | Enable modifying or persisting global system variables. Level: Global.           |
+| TABLE_ENCRYPTION_ADMIN      | Enable overriding default encryption settings. Level: Global.                    |
+| TP_CONNECTION_ADMIN         | Enable thread pool connection administration. Level: Global.                     |         
+| VERSION_TOKEN_ADMIN         | Enable use of Version Tokens functions. Level: Global.                           |                  
+| XA_RECOVER_ADMIN            | Enable XA RECOVER execution. Level: Global.                                      |                                
+
+
+```mysql
+# create user
+# diakses hanya melalui localhost
+create user 'triyas'@'localhost';
+# diakses hanya melalui ip ini
+create user 'triyas'@'192.168.100.111';
+# dapat dikases dari manapun
+create user 'triyas'@'%';
+
+# delete user
+drop user 'triyas'@'localhost';
+drop user 'triyas'@'192.168.100.111';
+drop user 'triyas'@'%';
+
+# Mwnambahkan hak akses
+grant select on nama_database.* to 'triyas'@'localhost';
+grant select, insert, update, delete on nama_database.* to 'triyas'@'%';
+
+# Melihat hak akses user
+show grants for 'triyas'@'localhost';
+show grants for 'triyas'@'%';
+
+# menghapus hak akses
+revoke select on nama_database.* to 'triyas'@'localhost';
+revoke select, insert, update, delete on nama_database.* to 'triyas'@'%';
+
+
+# mengubah password
+set password for 'triyas'@'localhost' = 'rahasia';
+set password for 'triyas'@'%' = 'rahasia';
+```
+
+
+### Backup Database
+- Saat membuat aplikasi menggunakan database, ada baiknya kita selalu melakukan backup data secara reguler
+- Mysql mendukung proses backup database
+- untuk melakukan backup database, kita tidak menggunakan perintah SQL, melainkan MySQL menyediakan sebuah aplikasi khusus untuk melakukan backup database, yaitu mysqldump
+- Lihat dokumentasi: https://dev.mysql.com/doc/refman/8.0/en/mysqldump.html
+
+**Gunakan Command Line**
+```bash
+# backup database
+mysqldump database_test --user root --password --result-file=/home/triyas/Documents/backup.sql
+
+# atau
+mysqldump -u root -p database_test > /home/triyas/Documents/backup.sql
+
+```
+
+### Restore Database
+- Selain melakukan backup database, di MySql juga kita bisa melakukan proses restore data dari file hasil backup
+- untuk melakukan restore database, kita bisa menggunakan aplikasi mysql client atau menggunakan perintah SOURCE di Mysql
+
+**Gunakan Command Line**
+```bash
+# backup database
+mysql --user=root --password database_import < /home/triyas/Documents/backup.sql
+
+# atau
+mysql -u root -p database_import <  /home/triyas/Documents/backup.sql
+
+```
+
+**Menggunakan SOURCE**
+
+![image](./image/img_18.png)
+
+**output** <br><br>
+
+![image](./image/img_19.png)
+
+**SELAMAT ANDA TELAH MENYELESAIKAN DATABASE DASAR !!!**
+
+## Next Learning
+- Studi kasus Database Design
+- Belajar Bahasa pemrograman
+- MySql Tuning
+- MySql Scalability
 
 ## Reference:
 - https://david.dev/how-to-install-mariadb-phpmyadmin-with-docker-compose
 - https://www.w3resource.com/mysql/mysql-data-types.php
 - https://www.youtube.com/watch?v=xYBclb-sYQ4
 - https://dev.mysql.com/doc/refman/8.0/en/data-types.html
+- https://github.com/triyasmkom/mysql-dasar-docker
