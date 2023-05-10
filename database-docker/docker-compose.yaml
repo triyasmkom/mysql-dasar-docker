@@ -1,0 +1,43 @@
+version: '2'
+
+volumes:
+  mariadb:
+    driver: local
+
+networks:
+  db:
+    driver: bridge
+
+services:
+  mariadb:
+    image: mariadb:10.6
+    container_name: "mariadb-test"
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: "12345"
+      MYSQL_USER:  "root"
+      MYSQL_PASSWORD: "12345"
+      MYSQL_DATABASE: "database_test"
+    expose:
+      - "40000"
+    ports:
+      - "40000:3306"
+    volumes:
+      - ./apps/mariadb:/var/lib/mysql
+      - ./apps/data:/home/user/data
+    networks:
+      db:
+
+  phpmyadmin:
+    image: phpmyadmin
+    container_name: "phpmyadmin"
+    restart: always
+    expose:
+      - "40001"
+    ports:
+      - "40001:80"
+    environment:
+      - PMA_HOST=mariadb
+      - PMA_PORT=3306
+    networks:
+      db:
