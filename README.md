@@ -1866,3 +1866,447 @@ mysql -u root -p database_import <  /home/triyas/Documents/backup.sql
 - https://www.youtube.com/watch?v=xYBclb-sYQ4
 - https://dev.mysql.com/doc/refman/8.0/en/data-types.html
 - https://github.com/triyasmkom/mysql-dasar-docker
+
+
+## SQL Tutorial
+
+### Query
+
+Silakan download contoh database, disini https://www.mysqltutorial.org/wp-content/uploads/2018/03/mysqlsampledatabase.zip kemudian import ke database local anda.
+
+Berikut isi tabel dari database ini:
+
+
+```mysql
+# melihat tabel dalam database
+
+show tables;
+
+```
+
+```
+| Tables\_in\_classicmodels |
+| :--- |
+| customers |
+| employees |
+| offices |
+| orderdetails |
+| orders |
+| payments |
+| productlines |
+| products |
+
+```
+
+#### Select
+
+```mysql
+SELECT * FROM customers;
+```
+
+Output Tabel Customers:
+
+```
+| customerNumber | customerName | contactLastName | contactFirstName | phone | addressLine1 | addressLine2 | city | state | postalCode | country | salesRepEmployeeNumber | creditLimit |
+| :--- | :--- | :--- | :--- | :--- | :--- | :--- | :--- | :--- | :--- | :--- | :--- | :--- |
+| 103 | Atelier graphique | Schmitt | Carine  | 40.32.2555 | 54, rue Royale | null | Nantes | null | 44000 | France | 1370 | 21000.00 |
+| 112 | Signal Gift Stores | King | Jean | 7025551838 | 8489 Strong St. | null | Las Vegas | NV | 83030 | USA | 1166 | 71800.00 |
+| 114 | Australian Collectors, Co. | Ferguson | Peter | 03 9520 4555 | 636 St Kilda Road | Level 3 | Melbourne | Victoria | 3004 | Australia | 1611 | 117300.00 |
+| 119 | La Rochelle Gifts | Labrune | Janine  | 40.67.8555 | 67, rue des Cinquante Otages | null | Nantes | null | 44000 | France | 1370 | 118200.00 |
+| 121 | Baane Mini Imports | Bergulfsen | Jonas  | 07-98 9555 | Erling Skakkes gate 78 | null | Stavern | null | 4110 | Norway | 1504 | 81700.00 |
+| 124 | Mini Gifts Distributors Ltd. | Nelson | Susan | 4155551450 | 5677 Strong St. | null | San Rafael | CA | 97562 | USA | 1165 | 210500.00 |
+| 125 | Havel & Zbyszek Co | Piestrzeniewicz | Zbyszek  | \(26\) 642-7555 | ul. Filtrowa 68 | null | Warszawa | null | 01-012 | Poland | null | 0.00 |
+
+```
+
+
+Latihan:
+
+```
+SELECT customerName, city FROM customers;
+```
+
+
+#### Select Distinct
+
+```
+SELECT DISTINCT column1, column2, ...
+FROM table_name;
+```
+
+```
+select distinct country from customers;
+```
+
+Output:
+
+```
+| country |
+| :--- |
+| France |
+| USA |
+| Australia |
+| Norway |
+| Poland |
+| Germany |
+| Spain |
+| Sweden |
+| Denmark |
+| Singapore |
+| Portugal |
+| Japan |
+| Finland |
+| UK |
+| Ireland |
+| Canada |
+| Hong Kong |
+| Italy |
+| Switzerland |
+| Netherlands |
+| Belgium |
+| New Zealand |
+| South Africa |
+| Austria |
+| Philippines |
+| Russia |
+| Israel |
+
+```
+
+
+Latihan:
+
+```
+SELECT COUNT(DISTINCT Country) FROM customers;
+
+
+SELECT COUNT(*) AS DistinctCountries
+FROM (SELECT DISTINCT Country FROM customers) cust;
+
+```
+
+
+#### WHERE CLAUSE
+
+Where clause tidak hanya dapat digunakan pada statement `SELECT` 
+tetapi juga dapat digunakan pada statement `update`, `delete`, dll.
+
+```
+SELECT column1, column2, ...
+FROM table_name
+WHERE condition;
+```
+
+
+
+```
+SELECT customerNumber, customerName, contactLastName, city
+FROM customers
+WHERE city = 'Nantes';
+
+```
+
+Output:
+
+```
+| customerNumber | customerName | contactLastName | city |
+| :--- | :--- | :--- | :--- |
+| 103 | Atelier graphique | Schmitt | Nantes |
+| 119 | La Rochelle Gifts | Labrune | Nantes |
+
+```
+
+
+Latihan:
+
+```
+SELECT * FROM customers
+WHERE country='France';
+
+```
+
+
+#### Operator di WHERE Clause
+
+##### 1. Equal (=)
+
+```
+SELECT * FROM  products
+WHERE buyPrice = 91.02;
+```
+
+
+##### 2. Greater Than (>)
+
+```
+SELECT * FROM  products
+WHERE buyPrice > 91;
+```
+
+
+##### 3. Less Than (<)
+
+```
+SELECT * FROM  products
+WHERE buyPrice < 91;
+```
+
+
+##### 4. Greater Than or Equal (>=)
+
+
+```
+SELECT * FROM  products
+WHERE buyPrice >= 91;
+```
+
+##### 5. Less Than or Equal (<=)
+
+```
+SELECT * FROM  products
+WHERE buyPrice <= 91;
+```
+
+##### 6. Not Equal (<> or !=)
+
+```
+SELECT * FROM  products
+WHERE buyPrice <> 91;
+```
+
+##### 7. Mencari berdasarkan range tertentu (BETWEEN)
+
+```
+SELECT * FROM  products
+WHERE buyPrice BETWEEN 80 AND 90;
+
+SELECT * FROM  products
+WHERE buyPrice NOT BETWEEN 80 AND 90
+```
+
+
+##### 8. Mencari untuk pola tertentu (LIKE)
+
+```
+SELECT * FROM customers
+WHERE city LIKE  's%';
+
+```
+
+##### 9. IN (IN)
+
+```
+SELECT * FROM customers
+WHERE city IN ('Paris','London');
+```
+
+
+
+#### AND OR NOT
+
+##### AND
+
+```
+SELECT column1, column2, ...
+FROM table_name
+WHERE condition1 AND condition2 AND condition3 ...;
+```
+Contoh:
+
+```
+SELECT * FROM customers
+WHERE country='Germany' AND city='Berlin';
+
+```
+
+##### OR
+
+```
+SELECT column1, column2, ...
+FROM table_name
+WHERE condition1 OR condition2 OR condition3 ...;
+```
+Contoh:
+
+```
+SELECT * FROM customers
+WHERE city='Berlin' OR city='München';
+
+```
+
+##### NOT
+
+```
+SELECT column1, column2, ...
+FROM table_name
+WHERE NOT condition;
+```
+
+Contoh:
+
+```
+SELECT * FROM customers
+WHERE NOT country='Germany';
+
+```
+
+#### Kombinasi AND OR dan NOT
+
+```
+SELECT * FROM customers
+WHERE country='Germany'
+  AND (city='Berlin' OR city='München');
+
+
+SELECT * FROM customers
+WHERE NOT country='Germany' AND NOT country='USA';
+```
+
+
+### ORDER BY
+
+Kata kunci order by digunakan untuk mengurutkan kumpulan hasil dalam urutan naik atau turun.
+
+#### Ascending
+
+```
+SELECT column1, column2, ...
+FROM table_name
+ORDER BY column1, column2, ... ASC;
+
+```
+
+Contoh: 
+
+```
+SELECT * FROM customers
+ORDER BY customerName ASC;
+```
+
+
+#### Descending
+
+```
+SELECT column1, column2, ...
+FROM table_name
+ORDER BY column1, column2, ... DESC;
+```
+
+Contoh:
+
+```
+SELECT * FROM customers
+ORDER BY customerName DESC;
+```
+
+
+#### ORDER BY beberapa kolom
+
+Contoh:
+
+```
+SELECT * FROM customers
+ORDER BY customerName ASC, country DESC ;
+```
+
+#### INSERT INTO
+
+kata kunci insert into digunakan untuk menambahkan baris data baru dalam sebuah tabel.
+
+##### Data Tunggal:
+
+```
+INSERT INTO table_name (column1, column2, column3, ...)
+VALUES (value1, value2, value3, ...);
+```
+
+contoh:
+
+```
+INSERT INTO customers (customerNumber, customerName, contactFirstName, contactLastName, addressLine1, city, country, phone)
+VALUES (500, 'Yamaha', 'Dani', 'Kurniawan','Jl Sriwijaya 2', 'Sleman', 'D.I. Yogyakarta', '0274-1111111');
+
+```
+
+##### Insert semua kolom
+
+```
+INSERT INTO table_name
+VALUES (value1, value2, value3, ...);
+
+```
+
+contoh:
+
+```
+INSERT INTO customers
+VALUES (504, 'Yamaha', 'Dani', 'Kurniawan', '0274-1111111', 'Jl Sriwijaya 1', 'Jl Sriwijaya 2', 'Sleman', 'D.I. Yogyakarta', '55222', 'Indonesia', 1612, 10000 );
+
+
+```
+
+##### Multiple Data
+
+```
+INSERT INTO table_name (column1, column2, column3, ...)
+VALUES (value1, value2, value3),
+(value1, value2, value3),
+(value1, value2, value3),
+(value1, value2, value3),
+(value1, value2, value3);
+```
+
+contoh:
+
+```
+INSERT INTO customers (customerNumber, customerName, contactFirstName, contactLastName, addressLine1, city, country, phone)
+VALUES (501, 'Honda', 'Santika', 'Putri','Jl Mancanegara', 'Sleman', 'D.I. Yogyakarta', '0274-222222'),
+       (502, 'Suzuki', 'Yudha', 'Pratama','Jl Kusuma Putra', 'Sleman', 'D.I. Yogyakarta', '0274-33333'),
+       (503, 'Astra Daihatsu', 'Andika', 'Putra','Jl Cendrawasih', 'Bantul', 'D.I. Yogyakarta', '0274-4444444');
+
+```
+
+####  Null Value
+
+##### IS NULL
+
+```
+SELECT column_names
+FROM table_name
+WHERE column_name IS NULL;
+```
+
+##### IS NOT NULL
+
+```
+SELECT column_names
+FROM table_name
+WHERE column_name IS NOT NULL;
+```
+
+
+
+### SOAL Latihan
+
+- Tampilkan data city, postalCode, dan customerName pada tabel customer.
+
+- Tampilkan semua nilai yang berbeda dari kolom country pada tabel customer.
+
+- Tampilkan semua data dimana kolom city memiliki nilai 'Las Vegas' pada tabel customer.
+
+- Tampilkan semua data dimana kolom city yang memiliki nilai 'Berlin' dan postalCode yang memiliki nilai '12209' pada tabel customer.
+
+- Tampilkan semua data dari tabel customer, dan urutkan hasilnya menurut abjad pada kolom city pada tabel customer. 
+
+- Masukkan data berikut ini ke tabel customer
+
+```
+| | |
+| :- | :- |
+| **customerName** | Hekkan Burger |
+| **addressLine1** | Gateveien 15 |
+| **city** | Sandnes |
+| **postalCode** | 4306 |
+| **country** | Norway |
+
+```
