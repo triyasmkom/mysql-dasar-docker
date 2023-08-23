@@ -1812,9 +1812,277 @@ revoke select, insert, update, delete on nama_database.* to 'triyas'@'%';
 set password for 'triyas'@'localhost' = 'rahasia';
 set password for 'triyas'@'%' = 'rahasia';
 ```
+### Procedure and Function
 
+#### Procedure
+
+reference: https://www.youtube.com/watch?v=2asRx9upXVA
+
+Seperti urutan proses dalam program, tetapi untuk di mysql adalah kumbulan beberapa query yang akan dijalankan.
+
+##### Membuat dan menghapus Procesure
+
+Membuat prosedur:
+
+```mysql
+DELIMITER //
+
+CREATE PROCEDURE GetProduct()
+BEGIN
+    SELECT * FROM products;
+END; //
+```
+
+Menghapus Prosedur:
+
+```mysql
+DROP PROCEDURE GetProduct;
+```
+
+Memanggil prosedur:
+
+```mysql
+CALL GetProduct();
+```
+
+
+##### Contoh Kasus
+
+Transfer uang:
+
+saldo nasabah1 : Rp 1000.000
+saldo nasabah2 : Rp 1000.000
+
+kasus: nasabah1 transfer ke nasabah2 dengan jumlah Rp 100.000
+
+query db:
+- kurangi saldo nasabah1: update data nasabah1, set saldo-100000
+- tambah saldo nasabah2: update data nasabah2, set saldo+100000
+- simpan history transfer: insert ke tabel transfer, nasabah1 transfer ke nasabah2 dengan jumlah 100000
+
+
+proses ini akan kita simpan ke dalam 1 prosedure yaitu procedure transfer.
+
+stored procedure, name: procedure_transfer (IN nasabah1, IN nasabah2, IN jumlah_transfer, OUT sisa_saldo):
+
+   - kurangi saldo nasabah1: update data nasabah1, set saldo-jumlah
+   - tambah saldo nasabah2: update data nasabah2, set saldo+jumlah
+   - simpan history transfer: insert ke tabel transfer, nasabah1 transfer ke nasabah2 dengan jumlah 100000
+   - sisa_saldo = saldo lama nasabah1 - jumlah transfer
+end
+
+Paramater:
+- IN ==> parameter untuk memasukkan data
+- OUT ==> parameter yang dikeluarkan dari hasil proses
+
+##### Contoh 1
+
+```mysql
+DELIMITER //
+
+CREATE PROCEDURE GetOneProduct(IN prod_code VARCHAR(100))
+BEGIN
+    SELECT * FROM products WHERE  productCode = prod_code;
+END; //
+
+```
+
+```mysql
+CALL GetOneProduct('S10_1678');
+```
+
+##### Contoh 2
+
+Buat Tabel Nasabah dan Transaksi:
+
+```mysql
+create table nasabah(
+    id int primary key not null auto_increment,
+    username varchar(100),
+    balance int(11),
+    createdAt timestamp default current_timestamp,
+    updatedAt timestamp default current_timestamp on update current_timestamp
+);
+
+show create table customers;
+
+create table transaksi(
+    id int primary key  not null auto_increment,
+    nasabah_id int,
+    history varchar(100),
+    createAt timestamp default current_timestamp,
+    updatedAt timestamp default current_timestamp on update  current_timestamp,
+    key (nasabah_id),
+    constraint nasabah_transaksi foreign key (nasabah_id) references nasabah(id)
+);
+
+```
+
+Masukkan data Nasabah
+
+```mysql
+INSERT INTO nasabah(username, balance) 
+VALUES ('nasabah1', 1000000),
+       ('nasabah2', 1000000);
+```
+
+Buat prosedure
+
+```mysql
+DELIMITER //
+
+CREATE PROCEDURE Transfer(IN nasabah1 INT, IN nasabah2 INT, IN jumlahTransfer INT(11), OUT sisaSaldoNasabah1 INT(11))
+BEGIN
+    DECLARE saldoNasabah1 INT(11);
+    DECLARE saldoNowNasabah1 INT(11);
+    DECLARE username1 varchar(100);
+    DECLARE username2 varchar(100);
+
+    SELECT balance INTO saldoNowNasabah1 FROM nasabah WHERE id = nasabah1;
+    SELECT username INTO username1 FROM nasabah WHERE id = nasabah1;
+    SELECT username INTO username2 FROM nasabah WHERE id = nasabah2;
+
+    IF saldoNowNasabah1 > 0 AND saldoNowNasabah1 > jumlahTransfer
+        THEN
+        UPDATE nasabah SET balance= balance-jumlahTransfer WHERE id = nasabah1;
+        UPDATE nasabah SET balance= balance+jumlahTransfer WHERE id = nasabah2;
+        SELECT balance INTO saldoNasabah1 FROM nasabah WHERE id = nasabah1;
+        INSERT INTO transaksi(nasabah_id, history) VALUES (nasabah1, CONCAT('Sucess Transfer ', jumlahTransfer, ' from ', username1, ' to ', username2));
+        SET sisaSaldoNasabah1 = saldoNasabah1;
+    ELSE
+        SET sisaSaldoNasabah1 = 0;
+        INSERT INTO transaksi(nasabah_id, history) VALUES (nasabah1, CONCAT('Failed Transfer ', jumlahTransfer, ' from ', username1, ' to ', username2));
+    END IF;
+END;//
+
+```
+
+Menggunakan prosedure
+
+```mysql
+CALL Transfer(1, 2, 100000, @saldoNow);
+
+SELECT @saldoNow;
+```
+
+
+#### Function
+
+##### Menghapus fungsi
+
+```mysql
+drop function diskonHarga;
+```
+
+##### Contoh 1
+
+Cara membuat fungsi di mysql, dengan format:
+
+```mysql
+DELIMITER //
+CREATE FUNCTION customerName(name varchar(100))
+RETURNS varchar(100)
+BEGIN
+    RETURN name;
+END;
+//
+```
+
+Kemudian cara memanggilnya hanya seperti ini:
+
+```mysql
+SELECT customerName('triyas');
+```
+
+Fungsi di atas hanya mengirimkan parameter name dengan type varchar(100) kemudian langsung mengembalikan nilai dari parameter tersebut dengan type varchar(100).
+
+##### Contoh 2
+
+Function:
+
+```mysql
+DELIMITER //
+CREATE FUNCTION alterCustomerName(name varchar(100))
+    RETURNS varchar(150)
+BEGIN
+    RETURN CONCAT('Customer Name is ', name);
+END;
+//
+```
+
+Cara menggunakannya:
+
+```mysql
+SELECT alterCustomerName('triyas hevianto saputro');
+```
+
+##### Contoh 3
+
+Function:
+
+```mysql
+DELIMITER //
+CREATE FUNCTION checkCustomerName(name1 varchar(100), name2 varchar(100))
+    RETURNS varchar(150)
+BEGIN
+    IF name1 = name2
+        THEN
+            RETURN 'Nama Sama';
+        ELSE
+            RETURN  'Nama tidak sama';
+        END IF;
+END;
+//
+
+```
+
+Cara memanggilnya:
+
+```mysql
+SELECT checkCustomerName('Triyas', 'Hevianto');
+SELECT checkCustomerName('Triyas', 'Triyas');
+```
+
+##### Contoh 4
+
+```mysql
+DELIMITER //
+CREATE FUNCTION hargaRupiah(harga_asli INT(11))
+RETURNS INT(11)
+BEGIN
+    DECLARE hasil INT(11);
+    SET hasil = harga_asli * 15000;
+    RETURN hasil;
+END; //
+
+```
+
+
+```mysql
+select buyPrice, hargaRupiah(buyPrice) tambahHarga from products;
+```
+
+##### Contoh 5
+
+```mysql
+DELIMITER //
+CREATE FUNCTION diskonHarga(harga_asli DECIMAL(11,2), besar_diskon DECIMAL(6,2))
+    RETURNS DECIMAL(11,2)
+BEGIN
+    DECLARE hasil DECIMAL(11,2);
+    DECLARE diskon DECIMAL(11,2);
+    SET diskon = besar_diskon * harga_asli;
+    SET hasil = harga_asli - diskon;
+    RETURN hasil;
+END; //
+```
+
+```mysql
+select buyPrice hargaDollar, diskonHarga(buyPrice, 0.5) diskponHarga from products;
+```
 
 ### Backup Database
+
 - Saat membuat aplikasi menggunakan database, ada baiknya kita selalu melakukan backup data secara reguler
 - Mysql mendukung proses backup database
 - untuk melakukan backup database, kita tidak menggunakan perintah SQL, melainkan MySQL menyediakan sebuah aplikasi khusus untuk melakukan backup database, yaitu mysqldump
