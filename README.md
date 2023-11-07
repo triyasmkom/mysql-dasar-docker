@@ -1739,46 +1739,46 @@ unlock instance;
 
 **Table Permissible Dynamic Privileges for GRANT and REVOKE**
 
-| Privilege                   | 	Meaning and Grantable Levels                                                    |
-|-----------------------------|----------------------------------------------------------------------------------|
-| APPLICATION_PASSWORD_ADMIN  | 	Enable dual password administration. Level: Global.                             |
-| AUDIT_ABORT_EXEMPT          | 	Allow queries blocked by audit log filter. Level: Global.                       |
-| AUDIT_ADMIN                 | 	Enable audit log configuration. Level: Global.                                  |
-| AUTHENTICATION_POLICY_ADMIN | 	Enable authentication policy administration. Level: Global.                     |
-| BACKUP_ADMIN                | 	Enable backup administration. Level: Global.                                    |
-| BINLOG_ADMIN                | 	Enable binary log control. Level: Global.                                       |
-| BINLOG_ENCRYPTION_ADMIN     | 	Enable activation and deactivation of binary log encryption. Level: Global.     |
-| CLONE_ADMIN                 | 	Enable clone administration. Level: Global.                                     |
-| CONNECTION_ADMIN            | 	Enable connection limit/restriction control. Level: Global.                     |
-| ENCRYPTION_KEY_ADMIN        | 	Enable InnoDB key rotation. Level: Global.                                      |
-| FIREWALL_ADMIN              | 	Enable firewall rule administration, any user. Level: Global.                   |
-| FIREWALL_EXEMPT             | 	Exempt user from firewall restrictions. Level: Global.                          |
-| FIREWALL_USER               | 	Enable firewall rule administration, self. Level: Global.                       |
-| FLUSH_OPTIMIZER_COSTS       | 	Enable optimizer cost reloading. Level: Global.                                 |
-| FLUSH_STATUS                | 	Enable status indicator flushing. Level: Global.                                |
-| FLUSH_TABLES                | 	Enable table flushing. Level: Global.                                           |
-| FLUSH_USER_RESOURCES        | 	Enable user-resource flushing. Level: Global.                                   |                            
-| GROUP_REPLICATION_ADMIN     | Enable Group Replication control. Level: Global.                                 |                      
-| INNODB_REDO_LOG_ARCHIVE     | Enable redo log archiving administration. Level: Global.                         |              
-| INNODB_REDO_LOG_ENABLE      | Enable or disable redo logging. Level: Global.                                   |                 
-| NDB_STORED_USER             | 	Enable sharing of user or role between SQL nodes (NDB Cluster). Level: Global.  |
-| PASSWORDLESS_USER_ADMIN     | 	Enable passwordless user account administration. Level: Global.                 |      
-| PERSIST_RO_VARIABLES_ADMIN  | Enable persisting read-only system variables. Level: Global.                     |    
-| REPLICATION_APPLIER         | 	Act as the PRIVILEGE_CHECKS_USER for a replication channel. Level: Global.      |
-| REPLICATION_SLAVE_ADMIN	    | Enable regular replication control. Level: Global.                               |                 
-| RESOURCE_GROUP_ADMIN	       | Enable resource group administration. Level: Global.                             |                 
-| RESOURCE_GROUP_USER	        | Enable resource group administration. Level: Global.                             |                   
-| ROLE_ADMIN                  | Enable roles to be granted or revoked, use of WITH ADMIN OPTION. Level: Global.  |   
-| SESSION_VARIABLES_ADMIN     | Enable setting restricted session system variables. Level: Global.               |  
-| SET_USER_ID                 | Enable setting non-self DEFINER values. Level: Global.                           |            
-| SHOW_ROUTINE                | Enable access to stored routine definitions. Level: Global.                      |                  
-| SKIP_QUERY_REWRITE          | Do not rewrite queries executed by this user. Level: Global.                     |            
-| SYSTEM_USER                 | Designate account as system account. Level: Global.                              |        
-| SYSTEM_VARIABLES_ADMIN      | Enable modifying or persisting global system variables. Level: Global.           |
-| TABLE_ENCRYPTION_ADMIN      | Enable overriding default encryption settings. Level: Global.                    |
-| TP_CONNECTION_ADMIN         | Enable thread pool connection administration. Level: Global.                     |         
-| VERSION_TOKEN_ADMIN         | Enable use of Version Tokens functions. Level: Global.                           |                  
-| XA_RECOVER_ADMIN            | Enable XA RECOVER execution. Level: Global.                                      |                                
+| Privilege                   | 	Meaning and Grantable Levels                                                      |
+|-----------------------------|------------------------------------------------------------------------------------|
+| APPLICATION_PASSWORD_ADMIN  | 	Enable dual password administration. Level: Global.                               |
+| AUDIT_ABORT_EXEMPT          | 	Allow queries blocked by audit log filter. Level: Global.                         |
+| AUDIT_ADMIN                 | 	Enable audit log configuration. Level: Global.                                    |
+| AUTHENTICATION_POLICY_ADMIN | 	Enable authentication policy administration. Level: Global.                       |
+| BACKUP_ADMIN                | 	Enable backup administration. Level: Global.                                      |
+| BINLOG_ADMIN                | 	Enable binary log control. Level: Global.                                         |
+| BINLOG_ENCRYPTION_ADMIN     | 	Enable activation and deactivation of binary log encryption. Level: Global.       |
+| CLONE_ADMIN                 | 	Enable clone administration. Level: Global.                                       |
+| CONNECTION_ADMIN            | 	Enable connection limit/restriction control. Level: Global.                       |
+| ENCRYPTION_KEY_ADMIN        | 	Enable InnoDB key rotation. Level: Global.                                        |
+| FIREWALL_ADMIN              | 	Enable firewall rule administration, any user. Level: Global.                     |
+| FIREWALL_EXEMPT             | 	Exempt user from firewall restrictions. Level: Global.                            |
+| FIREWALL_USER               | 	Enable firewall rule administration, self. Level: Global.                         |
+| FLUSH_OPTIMIZER_COSTS       | 	Enable optimizer cost reloading. Level: Global.                                   |
+| FLUSH_STATUS                | 	Enable status indicator flushing. Level: Global.                                  |
+| FLUSH_TABLES                | 	Enable table flushing. Level: Global.                                             |
+| FLUSH_USER_RESOURCES        | 	Enable user-resource flushing. Level: Global.                                     |                            
+| GROUP_REPLICATION_ADMIN     | Enable Group Replication control. Level: Global.                                   |                      
+| INNODB_REDO_LOG_ARCHIVE     | Enable redo log archiving administration. Level: Global.                           |              
+| INNODB_REDO_LOG_ENABLE      | Enable or disable redo logging. Level: Global.                                     |                 
+| NDB_STORED_USER             | 	Enable sharing of user or role between SQL nodes (NDB Cluster). Level: Global.    |
+| PASSWORDLESS_USER_ADMIN     | 	Enable passwordless user account administration. Level: Global.                   |      
+| PERSIST_RO_VARIABLES_ADMIN  | Enable persisting read-only system variables. Level: Global.                       |    
+| REPLICATION_APPLIER         | 	Act as the PRIVILEGE_CHECKS_USER for a replication channel. Level: Global.        |
+| REPLICATION_SLAVE_ADMIN	    | Enable regular replication control. Level: Global.                                 |                 
+| RESOURCE_GROUP_ADMIN	       | Enable resource group administration. Level: Global.                               |                 
+| RESOURCE_GROUP_USER	        | Enable resource group administration. Level: Global.                               |                   
+| ROLE_ADMIN                  | Enable roles to be granted or revoked, use of WITH ADMIN OPTION. Level: Global.    |   
+| SESSION_VARIABLES_ADMIN     | Enable setting restricted session system variables. Level: Global.                 |  
+| SET_USER_ID                 | Enable setting non-self DEFINER values. Level: Global.                             |            
+| SHOW_ROUTINE                | Enable access to stored routine definitions. Level: Global.                        |                  
+| SKIP_QUERY_REWRITE          | Do not rewrite queries executed by this user. Level: Global.                       |            
+| SYSTEM_USER                 | Designate account as system account. Level: Global.                                |        
+| SYSTEM_VARIABLES_ADMIN      | Enable modifying or persisting global system variables. Level: Global.             |
+| TABLE_ENCRYPTION_ADMIN      | Enable overriding default encryption settings. Level: Global.                      |
+| TP_CONNECTION_ADMIN         | Enable thread pool connection administration. Level: Global.                       |         
+| VERSION_TOKEN_ADMIN         | Enable use of Version Tokens functions. Level: Global.                             |                  
+| XA_RECOVER_ADMIN            | Enable XA RECOVER execution. Level: Global.                                        |                                
 
 
 ```mysql
@@ -2081,6 +2081,81 @@ END; //
 select buyPrice hargaDollar, diskonHarga(buyPrice, 0.5) diskponHarga from products;
 ```
 
+
+#### Trigger
+
+
+Contoh:
+
+Misal kita mau melakukan insert ke tabel nasabah di database db_1 dan kemudian akan men-trigger insert ke tabel nasabah di database db_2. 
+
+1. Buatlah 2 database, dan tambahkan tabel ke masing-masing database.
+2. Membuat datababase, misalnya seperti ini:
+
+    ```mysql
+    
+    CREATE DATABASE db_1;
+    
+    CREATE DATABASE db_2;
+    
+    ```
+
+3. membuat table, misalnya seperti ini:
+
+    ```mysql
+    CREATE TABLE `nasabah` (
+      `id` int(11) NOT NULL AUTO_INCREMENT,
+      `username` varchar(100) DEFAULT NULL,
+      `balance` int(11) DEFAULT NULL,
+      `createdAt` timestamp NOT NULL DEFAULT current_timestamp(),
+      `updatedAt` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
+      PRIMARY KEY (`id`)
+    )
+    ```
+
+4. kemudian create trigger ke database db_1
+
+    ```mysql
+    -- Masuk ke database1
+    USE db_1;
+    
+    -- Buat trigger insert pada table1
+    DELIMITER //
+    CREATE TRIGGER `insert_to_nasabah_db2` AFTER INSERT ON `nasabah`
+        FOR EACH ROW BEGIN
+        INSERT INTO db_2.nasabah (id, username, balance, createdAt, updatedAt)
+        VALUES (NEW.id, NEW.username, NEW.balance, NEW.createdAt, NEW.updatedAt );
+    END;
+    //
+    DELIMITER ;
+   
+    -- Buat trigger update pada table1
+    DELIMITER //
+    CREATE TRIGGER `update_to_nasabah_db2` AFTER UPDATE ON `nasabah`
+        FOR EACH ROW BEGIN
+        UPDATE db_2.nasabah SET id = NEW.id, username = NEW.username, balance = NEW.balance, createdAt = NEW.createdAt, updatedAt = NEW.updatedAt;
+    END;
+    //
+    DELIMITER ;
+   
+    -- Buat trigger delete pada table1
+    
+    DELIMITER //
+    CREATE TRIGGER `delete_to_nasabah_db2` AFTER DELETE ON `nasabah`
+        FOR EACH ROW BEGIN
+        DELETE FROM db_2.nasabah WHERE id = OLD.id;
+    END;
+    //
+    DELIMITER ;
+    ```
+
+5. Selanjutnya, coba insert ke tabel nasabah di database db_1, sperti ini:
+
+    ```mysql
+    INSERT INTO nasabah(username, balance) VALUES ('test_trigger2', 4000)
+    ```
+
+
 ### Backup Database
 
 - Saat membuat aplikasi menggunakan database, ada baiknya kita selalu melakukan backup data secara reguler
@@ -2152,19 +2227,19 @@ show tables;
 
 ```
 
-```
-| Tables\_in\_classicmodels |
-|---|
-| customers |
-| employees |
-| offices |
-| orderdetails |
-| orders |
-| payments |
-| productlines |
-| products |
 
-```
+
+| Tables_in_classicmodels |
+|-------------------------|
+| customers               |
+| employees               |
+| offices                 |
+| orderdetails            |
+| orders                  |
+| payments                |
+| productlines            |
+| products                |
+
 
 #### Select
 
@@ -2174,18 +2249,16 @@ SELECT * FROM customers;
 
 Output Tabel Customers:
 
-```
-| customerNumber | customerName | contactLastName | contactFirstName | phone | addressLine1 | addressLine2 | city | state | postalCode | country | salesRepEmployeeNumber | creditLimit |
-|---|---|---|---|---|---|---|---|---|---|---|---|---|
-| 103 | Atelier graphique | Schmitt | Carine  | 40.32.2555 | 54, rue Royale | null | Nantes | null | 44000 | France | 1370 | 21000.00 |
-| 112 | Signal Gift Stores | King | Jean | 7025551838 | 8489 Strong St. | null | Las Vegas | NV | 83030 | USA | 1166 | 71800.00 |
-| 114 | Australian Collectors, Co. | Ferguson | Peter | 03 9520 4555 | 636 St Kilda Road | Level 3 | Melbourne | Victoria | 3004 | Australia | 1611 | 117300.00 |
-| 119 | La Rochelle Gifts | Labrune | Janine  | 40.67.8555 | 67, rue des Cinquante Otages | null | Nantes | null | 44000 | France | 1370 | 118200.00 |
-| 121 | Baane Mini Imports | Bergulfsen | Jonas  | 07-98 9555 | Erling Skakkes gate 78 | null | Stavern | null | 4110 | Norway | 1504 | 81700.00 |
-| 124 | Mini Gifts Distributors Ltd. | Nelson | Susan | 4155551450 | 5677 Strong St. | null | San Rafael | CA | 97562 | USA | 1165 | 210500.00 |
-| 125 | Havel & Zbyszek Co | Piestrzeniewicz | Zbyszek  | \(26\) 642-7555 | ul. Filtrowa 68 | null | Warszawa | null | 01-012 | Poland | null | 0.00 |
+| customerNumber | customerName                     | contactLastName | contactFirstName | phone           | addressLine1                   | addressLine2 | city       | state    | postalCode | country    | salesRepEmployeeNumber | creditLimit |
+|----------------|----------------------------------|-----------------|------------------|-----------------|--------------------------------|--------------|------------|----------|------------|------------|------------------------|-------------|
+| 103            | Atelier graphique                | Schmitt         | Carine           | 40.32.2555      | 54, rue Royale                 | null         | Nantes     | null     | 44000      | France     | 1370                   | 21000.00    |
+| 112            | Signal Gift Stores               | King            | Jean             | 7025551838      | 8489 Strong St.                | null         | Las Vegas  | NV       | 83030      | USA        | 1166                   | 71800.00    |
+| 114            | Australian Collectors, Co.       | Ferguson        | Peter            | 03 9520 4555    | 636 St Kilda Road              | Level 3      | Melbourne  | Victoria | 3004       | Australia  | 1611                   | 117300.00   |
+| 119            | La Rochelle Gifts                | Labrune         | Janine           | 40.67.8555      | 67, rue des Cinquante Otages   | null         | Nantes     | null     | 44000      | France     | 1370                   | 118200.00   |
+| 121            | Baane Mini Imports               | Bergulfsen      | Jonas            | 07-98 9555      | Erling Skakkes gate 78         | null         | Stavern    | null     | 4110       | Norway     | 1504                   | 81700.00    |
+| 124            | Mini Gifts Distributors Ltd.     | Nelson          | Susan            | 4155551450      | 5677 Strong St.                | null         | San Rafael | CA       | 97562      | USA        | 1165                   | 210500.00   |
+| 125            | Havel & Zbyszek Co               | Piestrzeniewicz | Zbyszek          | \(26\) 642-7555 | ul. Filtrowa 68                | null         | Warszawa   | null     | 01-012     | Poland     | null                   | 0.00        |
 
-```
 
 
 Latihan:
@@ -2208,38 +2281,37 @@ select distinct country from customers;
 
 Output:
 
-```
-| country |
-|---|
-| France |
-| USA |
-| Australia |
-| Norway |
-| Poland |
-| Germany |
-| Spain |
-| Sweden |
-| Denmark |
-| Singapore |
-| Portugal |
-| Japan |
-| Finland |
-| UK |
-| Ireland |
-| Canada |
-| Hong Kong |
-| Italy |
-| Switzerland |
-| Netherlands |
-| Belgium |
-| New Zealand |
+| country      |
+|--------------|
+| France       |
+| USA          |
+| Australia    |
+| Norway       |
+| Poland       |
+| Germany      |
+| Spain        |
+| Sweden       |
+| Denmark      |
+| Singapore    |
+| Portugal     |
+| Japan        |
+| Finland      |
+| UK           |
+| Ireland      |
+| Canada       |
+| Hong Kong    |
+| Italy        |
+| Switzerland  |
+| Netherlands  |
+| Belgium      |
+| New Zealand  |
 | South Africa |
-| Austria |
-| Philippines |
-| Russia |
-| Israel |
+| Austria      |
+| Philippines  |
+| Russia       |
+| Israel       |
 
-```
+
 
 
 Latihan:
@@ -2276,13 +2348,11 @@ WHERE city = 'Nantes';
 
 Output:
 
-```
-| customerNumber | customerName | contactLastName | city |
-|----|---|---|---|
-| 103 | Atelier graphique | Schmitt | Nantes |
-| 119 | La Rochelle Gifts | Labrune | Nantes |
+| customerNumber | customerName        | contactLastName | city    |
+|----------------|---------------------|-----------------|---------|
+| 103            | Atelier graphique   | Schmitt         | Nantes  |
+| 119            | La Rochelle Gifts   | Labrune         | Nantes  |
 
-```
 
 
 Latihan:
@@ -2568,13 +2638,11 @@ WHERE column_name IS NOT NULL;
 
 - Masukkan data berikut ini ke tabel customer
 
-```
-| | |
-|--|--|
-| **customerName** | Hekkan Burger |
-| **addressLine1** | Gateveien 15 |
-| **city** | Sandnes |
-| **postalCode** | 4306 |
-| **country** | Norway |
+|                    |                 |
+|--------------------|-----------------|
+| **customerName**   | Hekkan Burger   |
+| **addressLine1**   | Gateveien 15    |
+| **city**           | Sandnes         |
+| **postalCode**     | 4306            |
+| **country**        | Norway          |
 
-```
